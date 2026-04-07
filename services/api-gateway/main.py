@@ -45,7 +45,13 @@ async def force_https_middleware(request: Request, call_next):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://jpshop.puneetdevops.online", "http://jpshop.puneetdevops.online", "*"],
+    allow_origins=[
+        "https://jpshop.puneetdevops.online",
+        "http://jpshop.puneetdevops.online",
+        "https://api.puneetdevops.online",
+        "http://localhost:5173",  # Local Vite dev server
+        "http://localhost:3000"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -102,7 +108,7 @@ def get_audit_logs(db: Session = Depends(get_db)):
     return logs
 
 # Example simple proxy logic
-@app.api_route("/{service_name}/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
+@app.api_route("/{service_name}/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH"])
 async def route_request(service_name: str, path: str, request: Request, background_tasks: BackgroundTasks):
     if service_name not in SERVICES:
         return Response(status_code=404, content="Service not found")
