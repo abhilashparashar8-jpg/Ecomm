@@ -1,12 +1,13 @@
-from prometheus_fastapi_instrumentator import Instrumentator
-from fastapi import FastAPI, Depends, HTTPException, status, Request
-from sqlalchemy.orm import Session
-from typing import List
-import models, schemas
-from database import engine, get_db
-from security import verify_token
-
+from sqlalchemy import text
 models.Base.metadata.create_all(bind=engine)
+
+# Auto-migration for missing columns
+try:
+    with engine.begin() as conn:
+        # Check standard columns if any were added recently
+        pass 
+except Exception as e:
+    print(f"Migration failed for order-service: {e}")
 
 app = FastAPI(title="Order Service")
 

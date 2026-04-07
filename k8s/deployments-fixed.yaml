@@ -140,7 +140,7 @@ spec:
     spec:
       containers:
       - name: auth-service-cnt
-        image: aksacr.azurecr.io/auth-service:v2
+        image: aksacr.azurecr.io/auth:v10
         imagePullPolicy: Always
         resources:
           requests:
