@@ -16,14 +16,14 @@ export default function ProductDetails() {
 
   // RESTORED KIDS CONTENT (Animal/Cartoon)
   const KIDS_PRODUCTS = [
-    { id: 101, name: "Funny Monkey Story", category: "Jungle Fun", youtube_id: "f_C_W_pZ5E0", image_url: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=800" },
-    { id: 102, name: "The Lion King", category: "Learn with Animals", youtube_id: "D-vLd-L2C2o", image_url: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800" },
-    { id: 103, name: "Forest Adventure", category: "Jungle Fun", youtube_id: "6V0d06fD-6Y", image_url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" },
-    { id: 104, name: "Playful Tiger", category: "Jungle Fun", youtube_id: "W-7w_F-Z6_w", image_url: "https://images.unsplash.com/photo-1508817628294-5a453fa0b8fb?w=800" },
-    { id: 105, name: "Fun Farm Songs", category: "Baby Songs", youtube_id: "_S-uX-6-_8-", image_url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800" },
-    { id: 106, name: "Zebra's Party", category: "Learn with Animals", youtube_id: "yM-G-E-O-G0", image_url: "https://images.unsplash.com/photo-1501705388883-4ed8a543392c?w=800" },
-    { id: 107, name: "Baby Shark Dance", category: "Trending Now", youtube_id: "z0GKGpPUGfk", image_url: "https://images.unsplash.com/photo-1560275619-4662e366661b?w=800" },
-    { id: 108, name: "Magical Forest", category: "Trending Now", youtube_id: "l4S2_JSPr6w", image_url: "https://images.unsplash.com/photo-1511497584788-876760111969?w=800" },
+    { id: 101, name: "Big Buck Bunny", category: "Jungle Fun", youtube_id: "aqz-KE-bpKQ", image_url: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=800" },
+    { id: 102, name: "Spring", category: "Learn with Animals", youtube_id: "WhWc3b3KhnY", image_url: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800" },
+    { id: 103, name: "Sintel", category: "Jungle Fun", youtube_id: "eRsGyueVLvQ", image_url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" },
+    { id: 104, name: "Agent 327", category: "Jungle Fun", youtube_id: "mN0zPOpADL4", image_url: "https://images.unsplash.com/photo-1508817628294-5a453fa0b8fb?w=800" },
+    { id: 105, name: "Caminandes 1", category: "Baby Songs", youtube_id: "SkVqJ1SGoEI", image_url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800" },
+    { id: 106, name: "Caminandes 2", category: "Learn with Animals", youtube_id: "Z4C82eyhwxc", image_url: "https://images.unsplash.com/photo-1501705388883-4ed8a543392c?w=800" },
+    { id: 107, name: "Cosmos", category: "Trending Now", youtube_id: "Y-rmzh0PI3c", image_url: "https://images.unsplash.com/photo-1560275619-4662e366661b?w=800" },
+    { id: 108, name: "Glass Half", category: "Trending Now", youtube_id: "W0mEA3p9w2k", image_url: "https://images.unsplash.com/photo-1511497584788-876760111969?w=800" },
   ];
 
   // MASTER CATALOG (STRICTLY MATCHED)

@@ -10,5 +10,6 @@ class Product(Base):
     price = Column(Float, nullable=False)
     image_url = Column(String(500), nullable=True)
     video_url = Column(String(500), nullable=True)
+    youtube_id = Column(String(100), nullable=True)
     category = Column(String(100), index=True, nullable=True)
     stock = Column(Integer, default=0)

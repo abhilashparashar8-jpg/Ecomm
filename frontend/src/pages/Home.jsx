@@ -16,14 +16,14 @@ export default function Home() {
 
   // RESTORED ORIGINAL KIDS CONTENT (Animal/Cartoon)
   const KIDS_PRODUCTS = [
-    { id: 101, name: "Funny Monkey Story", category: "Jungle Fun", youtube_id: "f_C_W_pZ5E0", image_url: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=800" },
-    { id: 102, name: "The Lion King", category: "Learn with Animals", youtube_id: "D-vLd-L2C2o", image_url: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800" },
-    { id: 103, name: "Forest Adventure", category: "Jungle Fun", youtube_id: "6V0d06fD-6Y", image_url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" },
-    { id: 104, name: "Playful Tiger", category: "Jungle Fun", youtube_id: "W-7w_F-Z6_w", image_url: "https://images.unsplash.com/photo-1508817628294-5a453fa0b8fb?w=800" },
-    { id: 105, name: "Fun Farm Songs", category: "Baby Songs", youtube_id: "_S-uX-6-_8-", image_url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800" },
-    { id: 106, name: "Zebra's Party", category: "Learn with Animals", youtube_id: "yM-G-E-O-G0", image_url: "https://images.unsplash.com/photo-1501705388883-4ed8a543392c?w=800" },
-    { id: 107, name: "Baby Shark Dance", category: "Trending Now", youtube_id: "z0GKGpPUGfk", image_url: "https://images.unsplash.com/photo-1560275619-4662e366661b?w=800" },
-    { id: 108, name: "Magical Forest", category: "Trending Now", youtube_id: "l4S2_JSPr6w", image_url: "https://images.unsplash.com/photo-1511497584788-876760111969?w=800" },
+    { id: 101, name: "Funny Monkey Story", category: "Jungle Fun", youtube_id: "1w0I8F0yRvs", image_url: "https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=800" },
+    { id: 102, name: "The Lion King", category: "Learn with Animals", youtube_id: "7TavVZMewpY", image_url: "https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=800" },
+    { id: 103, name: "Forest Adventure", category: "Jungle Fun", youtube_id: "KYniUCGPGLs", image_url: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800" },
+    { id: 104, name: "Playful Tiger", category: "Jungle Fun", youtube_id: "t0Q2otsqC4I", image_url: "https://images.unsplash.com/photo-1508817628294-5a453fa0b8fb?w=800" },
+    { id: 105, name: "Fun Farm Songs", category: "Baby Songs", youtube_id: "e_04ZrNroTo", image_url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800" },
+    { id: 106, name: "Zebra's Party", category: "Learn with Animals", youtube_id: "r1N7uS_BsvM", image_url: "https://images.unsplash.com/photo-1501705388883-4ed8a543392c?w=800" },
+    { id: 107, name: "Baby Shark Dance", category: "Trending Now", youtube_id: "XqZsoesa55w", image_url: "https://images.unsplash.com/photo-1560275619-4662e366661b?w=800" },
+    { id: 108, name: "Magical Forest", category: "Trending Now", youtube_id: "T-d-1Xo3jG4", image_url: "https://images.unsplash.com/photo-1511497584788-876760111969?w=800" },
   ];
 
   // ADULT MODE PUNEET CONTENT (MASTER CATALOG - FINAL ALIGNMENT)
@@ -81,8 +81,8 @@ export default function Home() {
 
   // For Hero: Adults pick from Adult list, Kids pick from STABLE Kids list
   const kidsHeroPool = [
-    { name: "The Lion King", youtube_id: "7TavVZMewpY", description: "Simba returns to claim his kingdom in this legendary Disney classic." },
-    { name: "Finding Nemo", youtube_id: "2zLkasSbt7o", description: "An epic underwater adventure to find a lost son." }
+    { name: "Big Buck Bunny", youtube_id: "aqz-KE-bpKQ", description: "A giant rabbit takes revenge on some bullying rodents." },
+    { name: "Spring", youtube_id: "WhWc3b3KhnY", description: "A shepherd girl and her dog face ancient spirits to continue the cycle of life." }
   ];
 
   const heroSource = isKids ? kidsHeroPool : DUMMY_PRODUCTS;
@@ -96,9 +96,9 @@ export default function Home() {
   };
 
   return (
-    <div className={`min-h-screen ${isKids ? 'bg-[#1a0a2e]' : 'bg-[#141414]'} overflow-hidden transition-colors duration-1000`}>
+    <div className={`relative min-h-screen ${isKids ? 'bg-[#1a0a2e]' : 'bg-[#141414]'} overflow-hidden transition-colors duration-1000`}>
        {/* Hero Section */}
-       <div className="relative h-[85vh] w-full overflow-hidden">
+       <div className="relative h-screen w-full overflow-hidden z-0">
          <div className={`absolute inset-0 z-20 ${isKids ? 'bg-gradient-to-t from-[#1a0a2e] via-transparent to-pink-500/20' : 'bg-gradient-to-t from-[#141414] via-[#141414]/20 to-black/60'}`} />
          <div className={`absolute inset-0 z-20 ${isKids ? 'bg-gradient-to-r from-purple-900/40 via-transparent to-transparent' : 'bg-gradient-to-r from-black/80 via-transparent to-transparent'}`} />
          
@@ -118,8 +118,11 @@ export default function Home() {
                 100% { transform: scale(1.15) translate(-1%, -1%); }
             }
          `}} />
+       </div>
 
-         <div className="absolute top-[35%] left-[4%] z-30 max-w-2xl animate-fade-in-up">
+       {/* Hero Content Overlay */}
+       <div className="absolute top-0 left-0 w-full h-screen z-20 pointer-events-none">
+         <div className="absolute bottom-0 left-[4%] pb-32 w-full max-w-2xl animate-fade-in-up pointer-events-auto">
             <div className="flex items-center gap-2 mb-2">
                 {isKids ? (
                    <span className="bg-yellow-400 text-purple-900 px-3 py-1 rounded-full font-black text-xs tracking-tighter shadow-lg transform -rotate-3">{heroData.badge}</span>
@@ -130,12 +133,10 @@ export default function Home() {
                   </>
                 )}
             </div>
-            <h1 className="text-7xl font-black text-white drop-shadow-2xl mb-4 leading-[0.9] tracking-tight uppercase">
-               {heroData.title.split(' ').map((word, i) => (
-                   <React.Fragment key={i}>{word}<br/></React.Fragment>
-               ))}
+            <h1 className="text-4xl font-black text-white drop-shadow-2xl mb-4 leading-tight tracking-tight uppercase">
+               {heroData.title}
             </h1>
-            <p className="text-xl text-white font-semibold drop-shadow-lg mb-6 max-w-xl line-clamp-3 text-neutral-200">
+            <p className="text-base text-white font-medium drop-shadow-lg mb-8 max-w-lg line-clamp-3 text-neutral-200">
               {heroData.desc}
             </p>
             <div className="flex space-x-4">
@@ -155,7 +156,7 @@ export default function Home() {
        </div>
 
        {/* Movie Rows */}
-       <div className="z-30 relative -mt-32 pb-20 space-y-12">
+       <div className="z-10 relative -mt-32 pb-20 space-y-12">
          {!loading ? (
              Object.entries(groupedProducts).map(([category, items], rowIndex) => (
                 <div key={category} className="px-[4%] group">
