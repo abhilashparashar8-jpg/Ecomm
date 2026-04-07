@@ -47,7 +47,7 @@ export default function Login() {
       {/* Background Image Overlay */}
       <div 
         className="absolute inset-0 opacity-50 bg-cover bg-center pointer-events-none"
-        style={{ backgroundImage: "url('https://assets.nflxext.com/ffe/siteui/vlv3/1ecf18b2-adad-4684-bd9a-acab7f2a875f/7201c18c-3bc6-4ba2-b2df-5bf587fcf3ec/US-en-20230116-popsignuptwoweeks-perspective_alpha_website_small.jpg')" }}
+        style={{ backgroundImage: "url('/background.png')" }}
       />
       <div className="absolute inset-0 bg-black/40" />
 

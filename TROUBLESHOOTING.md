@@ -1,61 +1,94 @@
-# E-Comm Cluster Troubleshooting Guide
+# Microservices Troubleshooting & Fix Log
 
-This document captures the key troubleshooting steps and resolutions for the E-Comm microservices architecture. Use this as a reference for production-level maintenance.
+This document tracks the persistent issues encountered during deployment and the specific fixes applied to resolve them.
 
----
+## 1. Authentication Service - HTTP 500 (Internal Server Error)
+**Status:** Under Investigation / Partially Fixed
 
-## 1. Mixed Content & HTTPS (Frontend ↔ Backend)
+### Symptom:
+User registration or login returns a `500 Internal Server Error`.
 
-> [!WARNING]
-> **Issue**: Browser blocks "insecure" HTTP requests from a "secure" HTTPS frontend.
-> **Fix**: 
-> 1. Force HTTPS in the API Gateway middleware (`X-Forwarded-Proto`).
-> 2. Redirect `http` to `https` in the Ingress controller.
-> 3. Update React frontend to use `https://api.puneetdevops.online` for all fetch calls.
-
----
-
-## 2. API Gateway Routing (No Service Found)
-
-> [!CAUTION]
-> **Issue**: Requests to `/auth/login` returning 404 because Gateway didn't know which service to call.
-> **Fix**:
-> 1. Implement a dynamic `/{service_name}/{path:path}` route in FastAPI.
-> 2. Ensure `AUTH_SERVICE_URL` and other env variables are correctly set in the Kubernetes deployment.
-> 3. Verify internal DNS (`http://auth-service:8001`) is resolving within the cluster.
+### Identified Causes & Fixes:
+1. **Azure SQL SSL Handshake Failure**:
+   - **Problem**: Kubernetes pods could not verify the Azure SQL SSL certificate.
+   - **Fix**: Added `TrustServerCertificate=yes` to the `DATABASE_URL` in `k8s/deployments-fixed.yaml` and standardized `database.py` fallbacks.
+2. **Silent Background Crashes**:
+   - **Problem**: Registration logic was failing silently, returning a generic 500.
+   - **Fix**: Added `try...except` block with `traceback.format_exc()` in `auth-service/main.py`. The API now returns the actual error message in the response body.
 
 ---
 
-## 3. Database Connectivity (Azure SQL)
+## 2. API Gateway - CORS Blockage
+**Status:** Fix Applied in `api:v4`
 
-> [!IMPORTANT]
-> **Issue**: Microservices failing to connect to Azure SQL Server.
-> **Fix**:
-> 1. Whitelist the Kubernetes cluster's **Outbound IP Address** in the Azure portal firewall settings.
-> 2. Use `pyodbc` with a persistent connection string.
-> 3. Ensure the `DB_PASSWORD` is injected via Kubernetes Secrets.
+### Symptom:
+`Access-Control-Allow-Origin` header is missing in browser console; preflight requests fail.
 
----
-
-## 4. Monitoring (Prometheus/Grafana)
-
-> [!NOTE]
-> **Issue**: Difficulty in tracking system health and API latency.
-> **Fix**:
-> 1. Instrument all FastAPI services with `prometheus-fastapi-instrumentator`.
-> 2. Expose `/metrics` endpoint.
-> 3. Add `scrape_configs` to Prometheus for internal Kubernetes services.
+### Identified Causes & Fixes:
+1. **Credential/Wildcard Conflict**:
+   - **Problem**: `allow_origins=["*"]` used with `allow_credentials=True` is prohibited by browsers.
+   - **Fix**: Explicitly listed the frontend domain (`https://jpshop.puneetdevops.online`) in `api-gateway/main.py`.
+2. **Preflight Interception**:
+   - **Problem**: The catch-all proxy route `/{service_name}/{path}` was handling `OPTIONS` requests, preventing the CORS middleware from injecting headers.
+   - **Fix**: Removed `OPTIONS` from the supported methods in `route_request`. Now, the `CORSMiddleware` handles all preflight requests automatically.
 
 ---
 
-## 5. Persistent Storage & PVC (Azure File Share)
+## 3. Product Service - HTTP 503 (Service Unavailable)
+**Status:** Pending Deployment
 
-> [!IMPORTANT]
-> **Issue**: Storing user files (videos/images) without losing them after pod restarts.
-> **Fix**:
-> 1. Use **Azure File Share (SMB)** for shared storage across multiple microservices.
-> 2. Define a `StorageClass` with `azurefile-csi` driver.
-> 3. Mount the PVC to the `vault-service` at a consistent mount point.
+### Symptom:
+Gateway fails to proxy requests to `http://product-service:8003/products`.
+
+### Identified Causes & Fixes:
+1. **Service Connectivity**:
+   - **Problem**: Gateway times out or fails to resolve the service name.
+   - **Fix**: Ensure the `product-service` deployment is using the updated `DATABASE_URL` with `TrustServerCertificate=yes`. If the service crashes on start due to DB failure, the gateway returns 503.
 
 ---
-*Created by Puneet Kumar - Production Engineering*
+
+## 4. Frontend - 404 Assets
+**Status:** Fixed
+
+### Symptom:
+Background images on the login page failed to load.
+
+### Fix:
+- Generated a local cinematic background image.
+- Placed it in `frontend/public/background.png`.
+- Updated `Login.jsx` to use the relative path `/background.png`.
+
+---
+
+## 5. Slow Docker Builds
+**Status:** Optimized Dockerfiles, Action Required from User
+
+### Symptom:
+Docker builds take an extremely long time (e.g., 500s+).
+
+### Identified Causes:
+1. **CPU Emulation**: Building `linux/amd64` images on Apple Silicon (ARM) requires QEMU emulation, which significantly slows down package installation and compilation.
+2. **Disabling Cache**: Using the `--no-cache` flag forces Docker to re-download and re-compile everything (like ODBC drivers and `pyodbc`) every time, even if only a small line of code changed.
+
+### Fixes & Recommendations:
+- **Enable Caching**: **DO NOT** use `--no-cache` unless absolutely necessary. Docker is smart enough to only rebuild layers that have changed.
+- **Dockerfile Optimization**: I have optimized the `Dockerfile` for `auth-service` and `api-gateway` to consolidate heavy `apt-get` operations into fewer layers, which helps the cache work more effectively.
+- **Recommended Build Command**:
+  ```bash
+  docker buildx build --platform linux/amd64 -t <tag> --push .
+  ```
+  (Removed `--no-cache`)
+
+---
+
+## Debugging Commands
+
+### Check Gateway Logs (Real-time)
+```bash
+kubectl logs -f deployment/api-gateway
+```
+
+### Check Auth Service Logs
+```bash
+kubectl logs -f deployment/auth-service
+```
