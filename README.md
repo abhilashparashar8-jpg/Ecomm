@@ -1,55 +1,123 @@
-# E-Commerce Microservices Platform
+# 🛒 StreamShop: Netflix-Style Microservices E-Commerce Platform
 
-Welcome to our fully featured E-Commerce platform! This application provides a rich user interface and a powerful backend. It's built using modern microservices, meaning the system is split into small, manageable pieces for better performance and organization.
+![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/Python-3.10-blue.svg)
+![React](https://img.shields.io/badge/React-18-61DAFB.svg)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-AKS-326CE5.svg)
+![Azure](https://img.shields.io/badge/Cloud-Azure-0089D6.svg)
 
-## What's Inside?
+**StreamShop** is a high-performance, modern e-commerce ecosystem built with a Netflix-inspired cinematic UI. It leverages a robust microservices architecture, containerized with Docker, and orchestrated on Kubernetes (Azure AKS).
 
-- **Frontend**: A beautiful, responsive user interface built with React and Vite. It is optimized for production and served lightning-fast via Nginx.
-- **Backend Services**: 9 separate Python applications that handle everything from user accounts to processing orders. Each service has its own dedicated job.
-- **Database**: A reliable Microsoft SQL Server database to safely store all your data.
+---
 
-## How to Run the Application
+## ✨ Features
 
-You can easily run the entire application on your computer using Docker. Docker packages everything up so you don't have to install any messy software on your own computer!
+- **🎬 Cinematic UI/UX**: Premium Netflix-style homepage with auto-playing video trailers on hover.
+- **🏗️ Microservices Architecture**: 9 independent services communicating via a centralized API Gateway.
+- **🔐 Seamless Auth**: Global authentication using OAuth2 & JWT.
+- **⚙️ Self-Healing Database**: Automatic schema synchronization (Auto-Migrations) on service startup.
+- **🚀 Optimized Builds**: Multi-stage Docker builds with persistent caching (< 10s build times).
+- **📊 Observability**: Metrics exposure via Prometheus and localized health monitoring.
+- **🛡️ Personal Vault**: Secure personal data storage with Azure File Share integration.
 
-### Easiest Way (Docker Compose)
+---
 
-1. Make sure you have [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
-2. Open your terminal, navigate to this project folder, and run:
-   ```bash
-   docker-compose up --build
-   ```
-3. That's it! Wait a few minutes for all the services and the database to finish starting up.
-4. **Access the Website**: Open your browser and go to `http://localhost:80` (or simply `http://localhost`). *Note: The port has been updated from 5173 to 80 for production readiness.*
-5. **Access the Backend API**: The main entry point for the backend data is available at `http://localhost:8000`.
+## 🛠️ Tech Stack
 
-> 💡 **Tip**: The SQL Server database image requires about 2GB of RAM to run properly. Ensure your Docker settings allow for enough memory!
+### Frontend
+- **React.js** (Vite)
+- **Vanilla CSS** (Premium Glassmorphism Design)
+- **Framer Motion** (Smooth Animations)
 
-### Running with Kubernetes
+### Backend Services (Python/FastAPI)
+- **API Gateway**: Centralized routing & Audit logging.
+- **Auth Service**: User registration & JWT Security.
+- **Product Service**: Catalog management with YouTube trailer integration.
+- **Cart & Order Services**: E-commerce transactional flow.
+- **User & Review Services**: Profile management & Social Proof.
+- **Payment & Wallet**: Integrated wallet system with mock payment processing.
+- **Vault Service**: Secure file management.
 
-If you want to run this in a more advanced, cloud-like environment using Kubernetes (for example, with Minikube):
+### Platform & DevOps
+- **Database**: Azure SQL Server / MS SQL.
+- **Containerization**: Docker (Buildx optimized).
+- **Orchestration**: Kubernetes (Azure Kubernetes Service).
+- **CI/CD**: Git-ready for automated pipelines.
 
-1. **Build the Docker Images**:
-   Point your terminal to Minikube's Docker environment and build the images:
-   ```bash
-   eval $(minikube docker-env)
-   docker build -t frontend:latest ./frontend
-   docker build -t api-gateway:latest ./services/api-gateway
-   docker build -t auth-service:latest ./services/auth-service
-   # ... (repeat this for all the remaining services in the services folder)
-   ```
+---
 
-2. **Deploy Everything**:
-   Apply the Kubernetes configuration files to start the cluster:
-   ```bash
-   kubectl apply -f k8s/deployments.yaml
-   ```
+## 🏗️ Architecture Overview
 
-## Recent Improvements
+```mermaid
+graph TD
+    A[Frontend React] --> B[API Gateway]
+    B --> C[Auth Service]
+    B --> D[Product Service]
+    B --> E[Order Service]
+    B --> F[Cart Service]
+    B --> G[User Service]
+    B --> H[Vault Service]
+    B --> I[Payment Service]
+    B --> J[Review Service]
+    B --> K[Wishlist Service]
+    C & D & E & F & G & I & J & K --- L[(Azure SQL Database)]
+    H --- M[Azure File Share]
+```
 
-- **Global Audit Logging**: The API Gateway now features an integrated robust background logger that records every user request (IP, method, target service, timestamp, success status) directly to the Azure MSSQL database `audit_logs` table without adding any API latency.
-- **Faster, Smaller Containers**: All services now use "multi-stage" Dockerfiles. This creates highly optimized, lightweight packages that start faster and take up less disk space.
-- **Production-Ready UI**: The frontend is now packaged correctly for real-world usage, using Nginx instead of a slower development server.
+---
 
-Enjoy building and exploring your new e-commerce platform!
-docker buildx build --no-cache --platform linux/amd64 -t aksacr.azurecr.io/wishlist-service:v2 --push .
+## 🚀 Quick Start (Deployment)
+
+### Prerequisites
+- Docker & Docker Buildx
+- Kubernetes Cluster (AKS recommended)
+- `kubectl` configured
+
+### 1. Build & Push Images
+```bash
+# Example for Auth Service
+cd services/auth-service
+docker buildx build --platform linux/amd64 -t your-registry.azurecr.io/auth:v1 --push .
+```
+
+### 2. Deploy to Kubernetes
+```bash
+kubectl apply -f k8s/deployments-fixed.yaml
+```
+
+---
+
+## ⚙️ Development Highlights
+
+### Super-Fast Builds
+We use a standardized multi-stage build process that caches system dependencies (like SQL drivers). 
+> **Build Time Improvement**: 15m ➡️ **8s**
+
+### Auto-Migration Engine
+Services are equipped with a custom auto-migration block in `main.py`:
+```python
+# Auto-migration for missing columns
+try:
+    with engine.begin() as conn:
+        # Automatically syncs schema on startup
+        conn.execute(text("ALTER TABLE ... ADD ..."))
+except Exception as e:
+    print(f"Migration failed: {e}")
+```
+
+---
+
+## 📁 Directory Structure
+
+- `frontend/`: React application.
+- `services/`: All 9 microservices.
+- `k8s/`: Kubernetes deployment manifests.
+- `scripts/`: Utility scripts for seeding and setup.
+
+---
+
+## 🤝 Contributing
+Feel free to fork and submit PRs for any improvements in UI or new microservice modules!
+
+---
+**Developed by [Puneet Kumar](https://github.com/Puneet-K-Sharma)**

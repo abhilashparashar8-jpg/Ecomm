@@ -81,7 +81,7 @@ spec:
     spec:
       containers:
       - name: stream-api-cnt
-        image: aksacr.azurecr.io/api-gateway:v1
+        image: aksacr.azurecr.io/api:v4
         imagePullPolicy: Always
         resources:
           requests:
@@ -106,7 +106,7 @@ spec:
           periodSeconds: 10
         env:
         - name: DATABASE_URL
-          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
+          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30;
 ---
 apiVersion: v1
 kind: Service
@@ -140,7 +140,7 @@ spec:
     spec:
       containers:
       - name: auth-service-cnt
-        image: aksacr.azurecr.io/auth-service:v1
+        image: aksacr.azurecr.io/auth:v10
         imagePullPolicy: Always
         resources:
           requests:
@@ -162,7 +162,7 @@ spec:
           periodSeconds: 10
         env:
         - name: DATABASE_URL
-          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
+          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30;
 ---
 apiVersion: v1
 kind: Service
@@ -218,7 +218,7 @@ spec:
           periodSeconds: 10
         env:
         - name: DATABASE_URL
-          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
+          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30;
 ---
 apiVersion: v1
 kind: Service
@@ -274,7 +274,7 @@ spec:
           periodSeconds: 10
         env:
         - name: DATABASE_URL
-          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
+          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30;
 ---
 apiVersion: v1
 kind: Service
@@ -330,7 +330,7 @@ spec:
           periodSeconds: 10
         env:
         - name: DATABASE_URL
-          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
+          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30;
 ---
 apiVersion: v1
 kind: Service
@@ -386,7 +386,7 @@ spec:
           periodSeconds: 10
         env:
         - name: DATABASE_URL
-          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
+          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30;
 ---
 apiVersion: v1
 kind: Service
@@ -442,7 +442,7 @@ spec:
           periodSeconds: 10
         env:
         - name: DATABASE_URL
-          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
+          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30;
 ---
 apiVersion: v1
 kind: Service
@@ -498,7 +498,7 @@ spec:
           periodSeconds: 10
         env:
         - name: DATABASE_URL
-          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
+          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30;
 ---
 apiVersion: v1
 kind: Service
@@ -555,7 +555,7 @@ spec:
           periodSeconds: 10
         env:
         - name: DATABASE_URL
-          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
+          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30;
 ---
 apiVersion: v1
 kind: Service
@@ -599,7 +599,7 @@ spec:
         - containerPort: 8009
         env:
         - name: DATABASE_URL
-          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
+          value: Driver={ODBC Driver 18 for SQL Server};Server=tcp:ecommserveraks.database.windows.net,1433;Database=ecommdb;Uid=ecommadmin;Pwd=admin@123@;Encrypt=yes;TrustServerCertificate=yes;Connection Timeout=30;
         - name: STORAGE_PATH
           value: "/mnt/personal-vault"
         volumeMounts:

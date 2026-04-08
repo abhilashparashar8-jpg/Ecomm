@@ -6,3 +6,4 @@ sqlalchemy==2.0.23
 pyodbc==5.0.1
 pyjwt==2.8.0
 prometheus-fastapi-instrumentator==6.1.0
+azure-monitor-opentelemetry

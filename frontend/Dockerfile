@@ -25,5 +25,5 @@ RUN chmod +x /entrypoint.sh
 # Expose port (default 80 inside the container)
 EXPOSE 80
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+

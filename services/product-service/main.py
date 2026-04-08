@@ -1,4 +1,13 @@
+import os
+from azure.monitor.opentelemetry import configure_azure_monitor
+
+# Configure Azure Monitor for Application Insights
+connection_string = os.getenv("APPLICATIONINSIGHTS_CONNECTION_STRING")
+if connection_string:
+    configure_azure_monitor(connection_string=connection_string)
+
 from prometheus_fastapi_instrumentator import Instrumentator
+
 from fastapi import FastAPI, Depends, HTTPException, status, Request
 from sqlalchemy.orm import Session
 from typing import List
@@ -7,7 +16,25 @@ from database import engine, get_db
 from security import verify_token
 import random
 
+from sqlalchemy import text
 models.Base.metadata.create_all(bind=engine)
+
+# Auto-migration for missing columns
+try:
+    with engine.begin() as conn:
+        columns_to_add = {
+            "video_url": "NVARCHAR(500) NULL",
+            "youtube_id": "NVARCHAR(100) NULL",
+            "category": "NVARCHAR(100) NULL",
+            "stock": "INT DEFAULT 0"
+        }
+        for col, type_info in columns_to_add.items():
+            result = conn.execute(text(f"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'products' AND COLUMN_NAME = '{col}'"))
+            if not result.fetchone():
+                print(f"Adding missing column '{col}' to 'products' table")
+                conn.execute(text(f"ALTER TABLE products ADD {col} {type_info}"))
+except Exception as e:
+    print(f"Migration failed for product-service: {e}")
 
 app = FastAPI(title="Product Service")
 
